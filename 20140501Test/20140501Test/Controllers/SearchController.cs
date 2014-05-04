@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -17,8 +18,9 @@ namespace _20140501Test.Controllers
 	public class SearchController : ApiController
 	{
 		[System.Web.Http.AcceptVerbs("POST")]
-		public IEnumerable<iSeries> Post(HttpRequestMessage request)
+		public List<Series> Post(HttpRequestMessage request)
 		{
+			
 			try
 			{
 				var jsonContent = request.Content.ReadAsStringAsync().Result;
@@ -29,13 +31,13 @@ namespace _20140501Test.Controllers
 				throw new HttpResponseException(
 						new HttpResponseMessage(HttpStatusCode.BadRequest)
 						{
-							Content = new StringContent("{\"Error\": \"JSON parsing failed\"}"),
-							ReasonPhrase = "Error, JSON parsing failed"
+							Content = new StringContent("{\"Error\": \"Could not decode request: JSON parsing failed\"}"),
+							ReasonPhrase = "Error, Could not decode request: JSON parsing failed"
 						});
 			}
 		}
 
-		public IEnumerable<iSeries> SearchRecordsFromJson(string jsonContent)
+		public List<Series> SearchRecordsFromJson(string jsonContent)
 		{
 			var obj = JObject.Parse(jsonContent);
 			var search = new SearchObject
@@ -59,7 +61,7 @@ namespace _20140501Test.Controllers
 					Slug = shows.Slug,
 					Title = shows.Title
 				};
-			return retShows.Skip(search.Skip).Take(search.Take);
+			return retShows.Skip(search.Skip).Take(search.Take).ToList();
 		}
 	}
 }
