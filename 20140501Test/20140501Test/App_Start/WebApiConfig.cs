@@ -12,7 +12,8 @@ namespace _20140501Test
 		{
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
-				routeTemplate: "{controller}/"
+				routeTemplate: "{controller}/",
+				defaults: new { controller = "Search", action = "Post" }
 			);
 			config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
