@@ -10,7 +10,7 @@ namespace _20140501Test.Controllers
 {
 	public class SearchController : ApiController
 	{
-		[AcceptVerbs("GET")]
+		[AcceptVerbs("POST")]
 		public IEnumerable<iSeries> Get(SearchObject search)
 		{
 			return new List<Series>();
