@@ -43,7 +43,7 @@ namespace _20140501Test.Controllers
 						Slug = shows.Slug,
 						Title = shows.Title
 					};
-				return retShows;
+				return retShows.Skip(search.Skip).Take(search.Take);
 			}
 			catch (Exception exception)
 			{
