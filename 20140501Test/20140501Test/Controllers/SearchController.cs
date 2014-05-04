@@ -22,29 +22,7 @@ namespace _20140501Test.Controllers
 			try
 			{
 				var jsonContent = request.Content.ReadAsStringAsync().Result;
-				var obj = JObject.Parse(jsonContent);
-				var search = new SearchObject
-				{
-					Skip = obj.GetValueFromJObject("skip").ToObject<int>(),
-					Take = obj.GetValueFromJObject("take").ToObject<int>(),
-					TotalRecords = obj.GetValueFromJObject("totalRecords").ToObject<int>()
-				};
-				var list = new List<iShow>();
-				foreach (var show in obj["payload"])
-				{
-					var newShow = new Show(show);
-					list.Add(newShow);
-				}
-				var retShows = 
-					from shows in
-						(new SearchBusiness()).FilterShowsByDrmAndEpisodeCount(list)
-					select new Series()
-					{
-						Image = shows.Image.ShowImage,
-						Slug = shows.Slug,
-						Title = shows.Title
-					};
-				return retShows.Skip(search.Skip).Take(search.Take);
+				return SearchRecordsFromJson(jsonContent);
 			}
 			catch (Exception)
 			{
@@ -55,6 +33,33 @@ namespace _20140501Test.Controllers
 							ReasonPhrase = "Error, JSON parsing failed"
 						});
 			}
+		}
+
+		public IEnumerable<iSeries> SearchRecordsFromJson(string jsonContent)
+		{
+			var obj = JObject.Parse(jsonContent);
+			var search = new SearchObject
+			{
+				Skip = obj.GetValueFromJObject("skip").ToObject<int>(),
+				Take = obj.GetValueFromJObject("take").ToObject<int>(),
+				TotalRecords = obj.GetValueFromJObject("totalRecords").ToObject<int>()
+			};
+			var list = new List<iShow>();
+			foreach (var show in obj["payload"])
+			{
+				var newShow = new Show(show);
+				list.Add(newShow);
+			}
+			var retShows =
+				from shows in
+					(new SearchBusiness()).FilterShowsByDrmAndEpisodeCount(list)
+				select new Series()
+				{
+					Image = shows.Image.ShowImage,
+					Slug = shows.Slug,
+					Title = shows.Title
+				};
+			return retShows.Skip(search.Skip).Take(search.Take);
 		}
 	}
 }
