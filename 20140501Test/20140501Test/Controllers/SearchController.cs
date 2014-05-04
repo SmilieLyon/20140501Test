@@ -18,10 +18,10 @@ namespace _20140501Test.Controllers
 		[AcceptVerbs("POST")]
 		public IEnumerable<iSeries> Post(HttpRequestMessage request)
 		{
-			var jsonContent = request.Content.ReadAsStringAsync().Result;
-			var obj = JObject.Parse(jsonContent);
 			try
 			{
+				var jsonContent = request.Content.ReadAsStringAsync().Result;
+				var obj = JObject.Parse(jsonContent);
 				var search = new SearchObject
 				{
 					Skip = obj.GetValueFromJObject("skip").ToObject<int>(),
@@ -47,7 +47,7 @@ namespace _20140501Test.Controllers
 			}
 			catch (Exception exception)
 			{
-				request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error, JSON parsing failed:" + exception.Message);
+				request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error, JSON parsing failed:");
 			}
 			
 			return null;
