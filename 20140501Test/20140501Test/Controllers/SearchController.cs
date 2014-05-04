@@ -19,13 +19,13 @@ namespace _20140501Test.Controllers
 	public class SearchController : ApiController
 	{
 		[System.Web.Http.AcceptVerbs("POST")]
-		public List<Series> Post(HttpRequestMessage request)
+		public ResponseObject Post(HttpRequestMessage request)
 		{
 			
 			try
 			{
 				var jsonContent = request.Content.ReadAsStringAsync().Result;
-				return SearchRecordsFromJson(jsonContent);
+				return new ResponseObject {response = SearchRecordsFromJson(jsonContent)};
 			}
 			catch (Exception)
 			{
@@ -58,9 +58,9 @@ namespace _20140501Test.Controllers
 					(new SearchBusiness()).FilterShowsByDrmAndEpisodeCount(list)
 				select new Series()
 				{
-					Image = shows.Image.ShowImage,
-					Slug = shows.Slug,
-					Title = shows.Title
+					image = shows.Image.ShowImage,
+					slug = shows.Slug,
+					title = shows.Title
 				};
 			return retShows.Skip(search.Skip).Take(search.Take).ToList();
 		}

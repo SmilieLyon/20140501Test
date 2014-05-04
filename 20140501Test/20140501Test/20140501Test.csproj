@@ -154,10 +154,12 @@
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\Interfaces\iImage.cs" />
     <Compile Include="Models\Interfaces\iEpisode.cs" />
+    <Compile Include="Models\Interfaces\IResponseObject.cs" />
     <Compile Include="Models\Interfaces\iShow.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Interfaces\iSearchObject.cs" />
     <Compile Include="Models\Interfaces\iSeries.cs" />
+    <Compile Include="Models\ResponseObject.cs" />
     <Compile Include="Models\Series.cs" />
     <Compile Include="Models\Show.cs" />
     <Compile Include="Models\SearchObject.cs" />

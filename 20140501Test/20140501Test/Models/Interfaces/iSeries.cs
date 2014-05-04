@@ -5,8 +5,8 @@ namespace _20140501Test.Models
 {
 	public interface iSeries
 	{
-		string Slug { get; set; }
-		string Title { get; set; }
-		string Image { get; set; }
+		string slug { get; set; }
+		string title { get; set; }
+		string image { get; set; }
 	}
 }
