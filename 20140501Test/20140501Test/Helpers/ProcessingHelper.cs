@@ -9,10 +9,20 @@ namespace _20140501Test.Helpers
 {
 	public static class ProcessingHelper
 	{
-		public static object GetValueFromJObject(JToken token, string variable)
+		public static bool JObjectHasValue(this JToken token, string variable)
 		{
 			var theVariable = token[variable];
-			return theVariable ?? null;
+			return theVariable != null;
+		}
+
+		public static JToken GetValueFromJObject(this JToken token, string variable)
+		{
+			var theVariable = token[variable];
+			if (theVariable == null)
+			{
+				throw new MissingFieldException(variable + " is missing");
+			}
+			return theVariable;
 		}
 	}
 }

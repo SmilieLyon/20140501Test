@@ -1,31 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Newtonsoft.Json.Linq;
 
 namespace _20140501Test.Models
 {
 	public class Show : iShow
 	{
-		public Show()
-		{
-			
-		}
-
-		public Show(string json)
-		{
-			var obj = JObject.Parse(json);
-			var payload = obj["payload"];
-			Slug = (string) payload["slug"];
-			Title = (string) payload["Title"]; 
-			TvChannel = (string) payload["TvChannel"]; 
-			Country = (string) payload["Country"]; 
-			Description = (string) payload["Description"]; 
-			Drm = (bool) payload["Drm"]; 
-			EpisodeCount = (int) payload["EpisodeCount"]; 
-			Genre = (string) payload["Genre"]; 
-			Language = (string) payload["Language"]; 
-			PrimaryColour = (string) payload["PrimaryColour"]; 
-		}
-
 		public string Slug { get; set; }
 		public string Title { get; set; }
 		public string TvChannel { get; set; }
