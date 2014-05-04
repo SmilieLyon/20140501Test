@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -31,7 +32,7 @@ namespace _20140501Test.Controllers
 				throw new HttpResponseException(
 						new HttpResponseMessage(HttpStatusCode.BadRequest)
 						{
-							Content = new StringContent("{\"Error\": \"Could not decode request: JSON parsing failed\"}"),
+							Content = new StringContent("{\"Error\": \"Could not decode request: JSON parsing failed\"}", Encoding.UTF8, "application/json"),
 							ReasonPhrase = "Error, Could not decode request: JSON parsing failed"
 						});
 			}
