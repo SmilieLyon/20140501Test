@@ -30,32 +30,7 @@ namespace _20140501Test.Controllers
 				var list = new List<iShow>();
 				foreach (var show in obj["payload"])
 				{
-					var newShow = new Show();
-					newShow.Slug = show.GetValueFromJObject("slug").ToObject<string>();
-					newShow.Title = show.GetValueFromJObject("title").ToObject<string>();
-					newShow.TvChannel = show.GetValueFromJObject("tvChannel").ToObject<string>();
-
-					newShow.Country = (show.JObjectHasValue("country")) ? show.GetValueFromJObject("country").ToObject<string>() : null;
-					newShow.Description = (show.JObjectHasValue("description")) ? show.GetValueFromJObject("description").ToObject<string>() : null;
-					newShow.Genre = (show.JObjectHasValue("genre")) ? show.GetValueFromJObject("genre").ToObject<string>() : null;
-					newShow.Language = (show.JObjectHasValue("language")) ? show.GetValueFromJObject("language").ToObject<string>() : null;
-					newShow.PrimaryColour = (show.JObjectHasValue("primaryColour")) ? show.GetValueFromJObject("primaryColour").ToObject<string>() : null;
-
-					newShow.Drm = (show.JObjectHasValue("drm")) ? show.GetValueFromJObject("drm").ToObject<bool>() : false;
-					newShow.EpisodeCount = (show.JObjectHasValue("episodeCount")) ? show.GetValueFromJObject("episodeCount").ToObject<int>() : 0;
-
-					if (string.IsNullOrWhiteSpace(newShow.Slug))
-					{
-						throw new MissingFieldException("slug");
-					}
-					if (string.IsNullOrWhiteSpace(newShow.Title))
-					{
-						throw new MissingFieldException("title");
-					}
-					if (string.IsNullOrWhiteSpace(newShow.TvChannel))
-					{
-						throw new MissingFieldException("tvChannel");
-					}
+					var newShow = new Show(show);
 					list.Add(newShow);
 				}
 			}
