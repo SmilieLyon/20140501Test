@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Newtonsoft.Json.Linq;
 using _20140501Test.Business;
@@ -15,7 +16,7 @@ namespace _20140501Test.Controllers
 {
 	public class SearchController : ApiController
 	{
-		[AcceptVerbs("POST")]
+		[System.Web.Http.AcceptVerbs("POST")]
 		public IEnumerable<iSeries> Post(HttpRequestMessage request)
 		{
 			try
@@ -45,12 +46,15 @@ namespace _20140501Test.Controllers
 					};
 				return retShows.Skip(search.Skip).Take(search.Take);
 			}
-			catch (Exception exception)
+			catch (Exception)
 			{
-				request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error, JSON parsing failed:");
+				throw new HttpResponseException(
+						new HttpResponseMessage(HttpStatusCode.BadRequest)
+						{
+							Content = new StringContent("{\"Error\": \"JSON parsing failed\"}"),
+							ReasonPhrase = "Error, JSON parsing failed"
+						});
 			}
-			
-			return null;
 		}
 	}
 }
