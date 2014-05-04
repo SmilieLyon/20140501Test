@@ -12,9 +12,14 @@ namespace _20140501Test.Helpers
 		public static bool JObjectHasValue(this JToken token, string variable)
 		{
 			var theVariable = token[variable];
-			return
-				(token[variable] is IEnumerable<JToken> && token[variable].Any()) ||
-				(theVariable != null & ! (token[variable] is IEnumerable<JToken>));
+			if (theVariable == null) return false;
+
+			switch (theVariable.Type)
+			{
+				case JTokenType.Null:
+					return false;
+			}
+			return true;
 		}
 
 		public static JToken GetValueFromJObject(this JToken token, string variable)

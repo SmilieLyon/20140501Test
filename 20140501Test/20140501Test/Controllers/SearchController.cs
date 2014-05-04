@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
 using Newtonsoft.Json.Linq;
+using _20140501Test.Business;
 using _20140501Test.Helpers;
 using _20140501Test.Models;
 
@@ -33,11 +34,20 @@ namespace _20140501Test.Controllers
 					var newShow = new Show(show);
 					list.Add(newShow);
 				}
+				var retShows = 
+					from shows in
+						(new SearchBusiness()).FilterShowsByDrmAndEpisodeCount(list)
+					select new Series()
+					{
+						Image = shows.Image.ShowImage,
+						Slug = shows.Slug,
+						Title = shows.Title
+					};
+				return retShows;
 			}
 			catch (Exception exception)
 			{
 				request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error, JSON parsing failed:" + exception.Message);
-				throw;
 			}
 			
 			return null;
